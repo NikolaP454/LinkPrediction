@@ -9,8 +9,9 @@ from torch import Tensor
 from ogb.nodeproppred import PygNodePropPredDataset
 from torch_geometric.data import Data
 
+from typing import Tuple
 
-def generate_dataset(name: str, root: str) -> None:
+def generate_dataset(name: str, root: str) -> Tuple[Data, Tensor, Tensor, Tensor]:
     """
     Generates a dataset for the given dataset name and saves it to the specified root directory.
 
