@@ -91,6 +91,6 @@ def generate_train_dataset(
     new_edge_index = torch.stack(new_edge_index).t()
 
     return Data(
-        x=dataset.x[train_mask].contiguous(),
+        x=dataset.x[train_mask],
         edge_index=new_edge_index.contiguous(),
     )
