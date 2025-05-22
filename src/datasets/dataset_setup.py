@@ -11,6 +11,7 @@ from torch_geometric.data import Data
 
 from typing import Tuple
 
+
 def generate_dataset(name: str, root: str) -> Tuple[Data, Tensor, Tensor, Tensor]:
     """
     Generates a dataset for the given dataset name and saves it to the specified root directory.
@@ -18,7 +19,7 @@ def generate_dataset(name: str, root: str) -> Tuple[Data, Tensor, Tensor, Tensor
     Args:
         name (str): The name of the dataset to generate.
         root (str): The root directory to save the dataset.
-        
+
     Returns:
         dataset_pg (Data): The PyTorch Geometric dataset object.
         train_idx (Tensor): The indices of the training set.
@@ -28,9 +29,9 @@ def generate_dataset(name: str, root: str) -> Tuple[Data, Tensor, Tensor, Tensor
 
     # Load the graph data
     dataset = PygNodePropPredDataset(name=name, root=root)
-    
+
     graph = dataset[0]
-    
+
     split_idx = dataset.get_idx_split()
     train_idx, valid_idx, test_idx = (
         split_idx["train"],
