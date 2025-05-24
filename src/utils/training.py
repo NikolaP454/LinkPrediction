@@ -32,6 +32,8 @@ def train_model(
     model.to(device)
 
     for epoch in range(epochs):
+        total_loss = 0.0
+
         for batch in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{epochs}"):
             titles = [dataset.titles[int(i.item())] for i in batch["x"]]
             abstracts = [dataset.abstracts[int(i.item())] for i in batch["x"]]
@@ -53,4 +55,7 @@ def train_model(
             loss.backward()
             optimizer.step()
 
-            tqdm.write(f"Loss: {loss.item():.4f}")
+            total_loss += loss.item()
+
+        avg_loss = total_loss / len(train_loader)
+        print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}")
