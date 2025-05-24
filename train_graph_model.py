@@ -14,7 +14,7 @@ from src import (
 
 
 if __name__ == "__main__":
-    ARGUMENTS = utils.args.ArgumentsFactory.get_args("data_generation")
+    ARGUMENTS = utils.args.ArgumentsFactory.get_args("train_graph_model")
 
     # Locate the experiment paths
     EXPERIMENT_PATH = ARGUMENTS.experiment_path
