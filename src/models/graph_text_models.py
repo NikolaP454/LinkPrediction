@@ -37,3 +37,10 @@ class SageConvModel(nn.Module):
         total_x = torch.cat([u_embeddings, v_embeddings], dim=1)
 
         return self.classifier(total_x)
+
+    def load_pretrained(self, model_path, device="cpu"):
+        state_dict = torch.load(model_path, map_location=torch.device(device))
+        self.load_state_dict(state_dict)
+
+    def save_pretrained(self, model_path):
+        torch.save(self.state_dict(), model_path)
