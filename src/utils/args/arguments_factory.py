@@ -1,6 +1,9 @@
 import argparse
 
-from .script_args import DataGenerationAC
+from .script_args import (
+    DataGenerationAC,
+    TrainGraphModelAC,
+)
 
 
 class ArgumentsFactory:
@@ -11,6 +14,7 @@ class ArgumentsFactory:
         ARGUMENT_CREATORS = dict(
             {
                 "data_generation": DataGenerationAC,
+                "train_graph_model": TrainGraphModelAC,
             }
         )
 
