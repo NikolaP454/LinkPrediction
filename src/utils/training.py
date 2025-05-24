@@ -1,12 +1,11 @@
 import os
 from tqdm import tqdm
 
-from .. import datasets
-
-
 import torch
 import torch.nn as nn
 from torch_geometric.loader import LinkNeighborLoader
+
+from .. import datasets
 
 
 def train_model(
