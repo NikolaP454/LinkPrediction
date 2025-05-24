@@ -1,4 +1,5 @@
 import os
+import json
 import torch
 
 from src import (
@@ -26,7 +27,10 @@ if __name__ == "__main__":
     os.makedirs(EXPERIMENT_RUN_CONFIGS_PATH, exist_ok=True)
 
     # Save the arguments to a file
-    ARGUMENTS.save(os.path.join(EXPERIMENT_RUN_CONFIGS_PATH, "args.json"))
+    with open(
+        os.path.join(EXPERIMENT_RUN_CONFIGS_PATH, "data_generation_args.json"), "w"
+    ) as f:
+        json.dump(ARGUMENTS.__dict__, f, indent=4)
 
     # Import the dataset
     dataset = ARGUMENTS.dataset
