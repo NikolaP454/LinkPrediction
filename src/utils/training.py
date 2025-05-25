@@ -15,6 +15,7 @@ def train_model(
     optimizer: torch.optim.Optimizer,
     device: str = "cpu",
     epochs: int = 1,
+    model_path: str = None,
 ) -> None:
     """
     Train the model on the dataset.
@@ -26,6 +27,7 @@ def train_model(
         optimizer (torch.optim.Optimizer): The optimizer to use.
         device (str): The device to use for training ('cpu' or 'cuda').
         epochs (int): The number of epochs to train for.
+        model_path (str, optional): Path to save the model after training. Defaults to None.
     """
 
     model.train()
@@ -59,3 +61,8 @@ def train_model(
 
         avg_loss = total_loss / len(train_loader)
         print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}")
+
+        if model_path:
+            torch.save(
+                model.state_dict(), os.path.join(model_path, f"model_{epoch + 1}.pt")
+            )

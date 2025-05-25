@@ -32,7 +32,10 @@ if __name__ == "__main__":
     ), f"Experiment run configs path {EXPERIMENT_RUN_CONFIGS_PATH} does not exist."
 
     EXPERIMENT_MODEL_PATH = os.path.join(EXPERIMENT_PATH, "graph_models")
+    MODEL_PATH = os.path.join(EXPERIMENT_MODEL_PATH, ARGUMENTS.model_name)
+
     os.makedirs(EXPERIMENT_MODEL_PATH, exist_ok=True)
+    os.makedirs(MODEL_PATH, exist_ok=True)
 
     # Model Related Arguments
     MODEL_NAME = ARGUMENTS.model_name
@@ -84,8 +87,5 @@ if __name__ == "__main__":
         train_loader=train_loader,
         device=DEVICE,
         epochs=EPOCHS,
+        model_path=MODEL_PATH,
     )
-
-    # Save the model
-    model_save_path = os.path.join(EXPERIMENT_MODEL_PATH, f"{MODEL_NAME}.pt")
-    torch.save(model.state_dict(), model_save_path)
