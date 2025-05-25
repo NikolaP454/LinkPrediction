@@ -44,3 +44,13 @@ class SageConvModel(nn.Module):
 
     def save_pretrained(self, model_path):
         torch.save(self.state_dict(), model_path)
+
+    def to(self, device):
+        super(SageConvModel, self).to(device)
+
+        self.text_embedding.to(device)
+        self.conv1.to(device)
+        self.conv2.to(device)
+        self.classifier.to(device)
+
+        return self

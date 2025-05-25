@@ -20,3 +20,11 @@ class TextEmbedding(nn.Module):
         embeddings = outputs.last_hidden_state[:, 0]
 
         return embeddings
+
+    def to(self, device):
+        super(TextEmbedding, self).to(device)
+
+        self.bert_model.to(device)
+        self.tokenizer = self.tokenizer.to(device)
+
+        return self
