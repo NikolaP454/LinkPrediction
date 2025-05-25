@@ -24,7 +24,4 @@ class TextEmbedding(nn.Module):
     def to(self, device):
         super(TextEmbedding, self).to(device)
 
-        self.bert_model.to(device)
-        self.tokenizer = self.tokenizer.to(device)
-
         return self
