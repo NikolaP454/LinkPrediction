@@ -11,10 +11,12 @@ class TextEmbedding(nn.Module):
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.bert_model = BertModel.from_pretrained(model_name)
 
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     def forward(self, texts):
         inputs = self.tokenizer(
             texts, return_tensors="pt", padding=True, truncation=True, max_length=512
-        )
+        ).to(self.device)
 
         outputs = self.bert_model(**inputs)
         embeddings = outputs.last_hidden_state[:, 0]
@@ -23,5 +25,7 @@ class TextEmbedding(nn.Module):
 
     def to(self, device):
         super(TextEmbedding, self).to(device)
+        self.device = device
 
+        self.bert_model.to(device)
         return self
