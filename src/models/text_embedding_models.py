@@ -5,7 +5,7 @@ from transformers import BertTokenizer, BertModel
 
 
 class TextEmbedding(nn.Module):
-    def __init__(self, model_name="bert-base-uncased"):
+    def __init__(self, model_name="distilbert-base-uncased"):
         super(TextEmbedding, self).__init__()
 
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
