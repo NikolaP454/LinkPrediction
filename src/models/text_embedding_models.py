@@ -1,21 +1,21 @@
 import torch
 import torch.nn as nn
 
-from transformers import BertTokenizer, BertModel
+from transformers import DistilBertTokenizer, DistilBertModel
 
 
 class TextEmbedding(nn.Module):
     def __init__(self, model_name="distilbert-base-uncased"):
         super(TextEmbedding, self).__init__()
 
-        self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        self.bert_model = BertModel.from_pretrained(model_name)
+        self.tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+        self.bert_model = DistilBertModel.from_pretrained(model_name)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def forward(self, texts):
         inputs = self.tokenizer(
-            texts, return_tensors="pt", padding=True, truncation=True, max_length=512
+            texts, return_tensors="pt", padding=True, truncation=True, max_length=256
         ).to(self.device)
 
         outputs = self.bert_model(**inputs)
