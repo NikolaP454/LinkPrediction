@@ -17,9 +17,11 @@ class SageConvModel(nn.Module):
 
         self.classifier = nn.Linear(out_channels * 2, 1)
 
+        self.device = "cpu" if not torch.cuda.is_available() else "cuda"
+
     def single_node_embedding(self, x_titles, x_abstracts, edge_index):
-        embedded_titles = self.text_embedding(x_titles)
-        embedded_abstracts = self.text_embedding(x_abstracts)
+        embedded_titles = self.text_embedding(x_titles).to(self.device)
+        embedded_abstracts = self.text_embedding(x_abstracts).to(self.device)
 
         x_combined = torch.cat([embedded_titles, embedded_abstracts], dim=1)
 
@@ -47,6 +49,7 @@ class SageConvModel(nn.Module):
 
     def to(self, device):
         super(SageConvModel, self).to(device)
+        self.device = device
 
         self.text_embedding.to(device)
         self.conv1.to(device)
