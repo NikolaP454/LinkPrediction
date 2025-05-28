@@ -5,11 +5,11 @@ from torch_geometric.data import Data
 class ArxivDataset:
     def __init__(self, data: Data):
 
-        self.titles = list(data.x[:, 0])
-        self.abstracts = list(data.x[:, 1])
+        self.titles_inputs = data.x[:, 0]
+        self.abstracts_inputs = data.x[:, 1]
 
         self.data = Data(
-            x=torch.Tensor(range(len(self.titles))),
+            x=torch.Tensor(range(len(self.titles_inputs))),
             edge_index=data.edge_index,
         )
 
@@ -18,12 +18,12 @@ class ArxivDataset:
         self.data.edge_index = self.data.edge_index.contiguous()
 
     def __len__(self):
-        return len(self.titles)
+        return len(self.titles_inputs)
 
     def __getitem__(self, idx):
         return {
-            "title": self.titles[idx],
-            "abstract": self.abstracts[idx],
+            "title-inputs": self.titles_inputs[idx],
+            "abstract-inputs": self.abstracts_inputs[idx],
             "edge_index": self.data.edge_index,
         }
 
@@ -31,7 +31,7 @@ class ArxivDataset:
         return self.data
 
     def get_title(self, idx):
-        return self.titles[idx]
+        return self.titles_inputs[idx]
 
     def get_abstract(self, idx):
-        return self.abstracts[idx]
+        return self.abstracts_inputs[idx]

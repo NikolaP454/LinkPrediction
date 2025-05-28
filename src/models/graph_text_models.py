@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from transformers import BertTokenizer, BertModel
 from torch_geometric.nn import SAGEConv
 
 from .text_embedding_models import TextEmbedding
@@ -28,7 +27,6 @@ class SageConvModel(nn.Module):
             use_titles or use_abstracts
         ), "At least one of titles or abstracts must be used."
 
-        # TODO - Possibility of paralelizing the text embeddings (if both are used)
         if use_titles:
             self.title_embedder = TextEmbedding(out_dimension=reduced_dim_titles)
 
@@ -65,15 +63,17 @@ class SageConvModel(nn.Module):
             "At least one of titles or abstracts must be used. (Joint Embedding Error)"
         )
 
-    def single_node_embedding(self, x_titles, x_abstracts, edge_index):
+    def single_node_embedding(self, x_titles_inputs, x_abstracts_inputs, edge_index):
         # Embed titles and abstracts if they are used
         embedded_titles, embedded_abstracts = None, None
 
         if self.use_titles:
-            embedded_titles = self.title_embedder(x_titles).to(self.device)
+            embedded_titles = self.title_embedder(x_titles_inputs).to(self.device)
 
         if self.use_abstracts:
-            embedded_abstracts = self.abstract_embedder(x_abstracts).to(self.device)
+            embedded_abstracts = self.abstract_embedder(x_abstracts_inputs).to(
+                self.device
+            )
 
         # Combine embeddings based on the flags
         x_combined = self.__joint_embeddings(embedded_titles, embedded_abstracts)
@@ -84,8 +84,12 @@ class SageConvModel(nn.Module):
 
         return x
 
-    def forward(self, x_titles, x_abstracts, edge_index, edge_label_index):
-        embeddings = self.single_node_embedding(x_titles, x_abstracts, edge_index)
+    def forward(
+        self, x_titles_inputs, x_abstracts_inputs, edge_index, edge_label_index
+    ):
+        embeddings = self.single_node_embedding(
+            x_titles_inputs, x_abstracts_inputs, edge_index
+        )
 
         u_embeddings = torch.index_select(embeddings, 0, edge_label_index[0])
         v_embeddings = torch.index_select(embeddings, 0, edge_label_index[1])

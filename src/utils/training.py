@@ -57,16 +57,18 @@ def train_model(
 
         # Process each batch in the training loader
         for batch in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{epochs}"):
-            titles = [dataset.titles[int(i.item())] for i in batch["x"]]
-            abstracts = [dataset.abstracts[int(i.item())] for i in batch["x"]]
+            title_inputs = [dataset.titles_inputs[int(i.item())] for i in batch["x"]]
+            abstract_inputs = [
+                dataset.abstracts_inputs[int(i.item())] for i in batch["x"]
+            ]
 
             edge_index = batch["edge_index"].to(device)
             edge_label_index = batch["edge_label_index"].to(device)
             edge_label = batch["edge_label"].to(device)
 
             pred_label = model(
-                titles,
-                abstracts,
+                title_inputs,
+                abstract_inputs,
                 edge_index,
                 edge_label_index,
             ).squeeze()
