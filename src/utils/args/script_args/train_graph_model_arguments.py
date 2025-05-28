@@ -100,4 +100,11 @@ class TrainGraphModelAC(BaseArgumentCreator):
             help="Reduced dimension for abstracts, 0 means no reduction",
         )
 
+        parser.add_argument(
+            "--continue_from_epoch",
+            type=int,
+            default=0,
+            help="Epoch to continue training from, 0 means start from scratch",
+        )
+
         return parser

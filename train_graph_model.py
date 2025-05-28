@@ -37,6 +37,8 @@ if __name__ == "__main__":
     os.makedirs(EXPERIMENT_MODEL_PATH, exist_ok=True)
     os.makedirs(MODEL_PATH, exist_ok=True)
 
+    CONTINUE_FROM_EPOCH = ARGUMENTS.continue_from_epoch
+
     # Model Related Arguments
     MODEL_NAME = ARGUMENTS.model_name
     HIDDEN_CHANNEL_SIZE = ARGUMENTS.hidden_channel_size
@@ -97,4 +99,5 @@ if __name__ == "__main__":
         device=DEVICE,
         epochs=EPOCHS,
         model_path=MODEL_PATH,
+        continue_from_epoch=CONTINUE_FROM_EPOCH,
     )

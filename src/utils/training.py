@@ -16,6 +16,7 @@ def train_model(
     device: str = "cpu",
     epochs: int = 1,
     model_path: str = None,
+    continue_from_epoch: int = 0,
 ) -> None:
     """
     Train the model on the dataset.
@@ -28,14 +29,31 @@ def train_model(
         device (str): The device to use for training ('cpu' or 'cuda').
         epochs (int): The number of epochs to train for.
         model_path (str, optional): Path to save the model after training. Defaults to None.
+        continue_from_epoch (int): Epoch to continue training from. Defaults to 0.
     """
+
+    # Sanity checks
+    assert (
+        continue_from_epoch < epochs
+    ), "Can't continue from an epoch greater than or equal to total epochs."
+
+    # Model Setup
+    if continue_from_epoch > 0 and model_path:
+        model.load_pretrained(
+            os.path.join(model_path, f"model_{continue_from_epoch}.pt"), device
+        )
 
     model.train()
     model.to(device)
 
-    for epoch in range(epochs):
+    RANGE = (
+        range(continue_from_epoch, epochs) if continue_from_epoch > 0 else range(epochs)
+    )
+
+    for epoch in RANGE:
         total_loss = 0.0
 
+        # Process each batch in the training loader
         for batch in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{epochs}"):
             titles = [dataset.titles[int(i.item())] for i in batch["x"]]
             abstracts = [dataset.abstracts[int(i.item())] for i in batch["x"]]
@@ -59,10 +77,11 @@ def train_model(
 
             total_loss += loss.item()
 
+        # Logging
         avg_loss = total_loss / len(train_loader)
-        print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}")
+        print(f"Epoch {epoch}, Loss: {avg_loss:.4f}")
 
         if model_path:
             torch.save(
-                model.state_dict(), os.path.join(model_path, f"model_{epoch + 1}.pt")
+                model.state_dict(), os.path.join(model_path, f"model_{epoch}.pt")
             )
