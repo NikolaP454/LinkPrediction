@@ -37,6 +37,8 @@ def train_model(
         continue_from_epoch < epochs
     ), "Can't continue from an epoch greater than or equal to total epochs."
 
+    print(f"Training on device: {device}")
+
     # Model Setup
     if continue_from_epoch > 0 and model_path:
         model.load_pretrained(
