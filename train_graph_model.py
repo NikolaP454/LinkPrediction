@@ -42,6 +42,12 @@ if __name__ == "__main__":
     HIDDEN_CHANNEL_SIZE = ARGUMENTS.hidden_channel_size
     OUTPUT_CHANNEL_SIZE = ARGUMENTS.output_channel_size
 
+    USE_TITLES = ARGUMENTS.use_titles
+    USE_ABSTRACTS = ARGUMENTS.use_abstract
+
+    REDUCED_DIM_TITLES = ARGUMENTS.reduced_dim_titles
+    REDUCED_DIM_ABSTRACTS = ARGUMENTS.reduced_dim_abstracts
+
     INITIAL_LR = ARGUMENTS.initial_lr
     WEIGHT_DECAY = ARGUMENTS.weight_decay
     EPOCHS = ARGUMENTS.epochs
@@ -72,9 +78,12 @@ if __name__ == "__main__":
 
     # Initialize the model
     model = models.graph_text_models.SageConvModel(
-        in_channels=0,
         hidden_channels=HIDDEN_CHANNEL_SIZE,
         out_channels=OUTPUT_CHANNEL_SIZE,
+        use_titles=USE_TITLES,
+        use_abstracts=USE_ABSTRACTS,
+        reduced_dim_titles=REDUCED_DIM_TITLES,
+        reduced_dim_abstracts=REDUCED_DIM_ABSTRACTS,
     )
 
     optimizer = Adam(model.parameters(), lr=INITIAL_LR, weight_decay=WEIGHT_DECAY)
