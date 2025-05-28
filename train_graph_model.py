@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 
 import torch
@@ -104,3 +104,5 @@ if __name__ == "__main__":
         model_path=MODEL_PATH,
         continue_from_epoch=CONTINUE_FROM_EPOCH,
     )
+
+    print(f"Model trained and saved at {MODEL_PATH}", file=sys.stderr)
