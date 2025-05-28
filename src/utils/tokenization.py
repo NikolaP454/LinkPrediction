@@ -20,8 +20,8 @@ def tokenize_data(data: Data, is_train: bool) -> Data:
     titles = list(data.x[:, 0])
     abstracts = list(data.x[:, 1])
 
-    tokenized_titles = tokenizer(titles)
-    tokenized_abstracts = tokenizer(abstracts)
+    tokenized_titles = tokenizer(titles)["input_ids"]
+    tokenized_abstracts = tokenizer(abstracts)["input_ids"]
 
     x = torch.stack((tokenized_titles, tokenized_abstracts), dim=1).contiguous()
 
