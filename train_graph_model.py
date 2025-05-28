@@ -59,7 +59,10 @@ if __name__ == "__main__":
 
     # Save the run configurations
     with open(
-        os.path.join(EXPERIMENT_RUN_CONFIGS_PATH, "train_graph_model_args.json"), "w"
+        os.path.join(
+            EXPERIMENT_RUN_CONFIGS_PATH, f"train_graph_{MODEL_NAME}_args.json"
+        ),
+        "w",
     ) as f:
         json.dump(ARGUMENTS.__dict__, f, indent=4)
 
