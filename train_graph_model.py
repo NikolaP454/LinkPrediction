@@ -42,8 +42,8 @@ if __name__ == "__main__":
     HIDDEN_CHANNEL_SIZE = ARGUMENTS.hidden_channel_size
     OUTPUT_CHANNEL_SIZE = ARGUMENTS.output_channel_size
 
-    USE_TITLES = ARGUMENTS.use_titles
-    USE_ABSTRACTS = ARGUMENTS.use_abstract
+    USE_TITLES = not ARGUMENTS.ignore_titles
+    USE_ABSTRACTS = not ARGUMENTS.ignore_abstracts
 
     REDUCED_DIM_TITLES = ARGUMENTS.reduced_dim_titles
     REDUCED_DIM_ABSTRACTS = ARGUMENTS.reduced_dim_abstracts

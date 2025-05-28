@@ -72,4 +72,32 @@ class TrainGraphModelAC(BaseArgumentCreator):
             help="Number of epochs to train the model",
         )
 
+        parser.add_argument(
+            "--ignore_titles",
+            action="store_true",
+            default=False,
+            help="Ignore titles in the graph model training",
+        )
+
+        parser.add_argument(
+            "--ignore_abstracts",
+            action="store_true",
+            default=False,
+            help="Ignore abstracts in the graph model training",
+        )
+
+        parser.add_argument(
+            "--reduced_dim_titles",
+            type=int,
+            default=0,
+            help="Reduced dimension for titles, 0 means no reduction",
+        )
+
+        parser.add_argument(
+            "--reduced_dim_abstracts",
+            type=int,
+            default=0,
+            help="Reduced dimension for abstracts, 0 means no reduction",
+        )
+
         return parser
