@@ -39,10 +39,7 @@ class TextEmbedding(nn.Module):
     def forward(self, inputs):
         inputs = inputs.to(self.device)
 
-        outputs = self.bert_model(
-            input_ids=inputs[:, 0]
-            attention_mask=inputs[:, 1]
-        )
+        outputs = self.bert_model(input_ids=inputs[:, 0], attention_mask=inputs[:, 1])
 
         embeddings = outputs.last_hidden_state[:, 0]
 
