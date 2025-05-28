@@ -54,13 +54,17 @@ if __name__ == "__main__":
         data, negative_edges_per_node=NEGATIVE_EDGES_PER_NODE
     )
 
+    # Tokenize the train and test data
+    train_data = utils.tokenization.tokenize_data(train_data, is_train=True)
+    test_data = utils.tokenization.tokenize_data(test_data, is_train=False)
+
     # Save the train and test data
     torch.save(
         train_data,
-        os.path.join(EXPERIMENT_DATA_PATH, "train_data.pt"),
+        os.path.join(EXPERIMENT_DATA_PATH, "train_data_tokenized.pt"),
     )
 
     torch.save(
         test_data,
-        os.path.join(EXPERIMENT_DATA_PATH, "test_data.pt"),
+        os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"),
     )

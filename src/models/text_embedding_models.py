@@ -1,7 +1,26 @@
 import torch
 import torch.nn as nn
 
-from transformers import DistilBertTokenizer, DistilBertModel
+from transformers import DistilBertTokenizerFast, DistilBertModel
+
+
+class TextTokenizer(nn.Module):
+    def __init__(
+        self, model_name: str = "distilbert-base-uncased", max_length: int = 256
+    ):
+
+        super(TextTokenizer, self).__init__()
+        self.tokenizer = DistilBertTokenizerFast.from_pretrained(model_name)
+        self.max_length = max_length
+
+    def forward(self, texts):
+        return self.tokenizer(
+            texts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=self.max_length,
+        )
 
 
 class TextEmbedding(nn.Module):
@@ -9,8 +28,6 @@ class TextEmbedding(nn.Module):
         self, model_name: str = "distilbert-base-uncased", out_dimension: int = 0
     ):
         super(TextEmbedding, self).__init__()
-
-        self.tokenizer = DistilBertTokenizer.from_pretrained(model_name)
         self.bert_model = DistilBertModel.from_pretrained(model_name)
 
         # If out_dimension is specified, we add a linear layer to reduce the output dimension
@@ -19,10 +36,8 @@ class TextEmbedding(nn.Module):
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def forward(self, texts):
-        inputs = self.tokenizer(
-            texts, return_tensors="pt", padding=True, truncation=True, max_length=256
-        ).to(self.device)
+    def forward(self, inputs):
+        inputs = inputs.to(self.device)
 
         outputs = self.bert_model(**inputs)
         embeddings = outputs.last_hidden_state[:, 0]
@@ -34,8 +49,8 @@ class TextEmbedding(nn.Module):
 
     def to(self, device):
         super(TextEmbedding, self).to(device)
-        self.device = device
 
+        self.device = device
         self.bert_model.to(device)
 
         if hasattr(self, "reducer"):
