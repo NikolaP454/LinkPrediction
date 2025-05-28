@@ -26,8 +26,8 @@ def tokenize_data(
     titles = list(data.x[:, 0])
     abstracts = list(data.x[:, 1])
 
-    tokenized_titles = title_tokenizer(titles).convert_to_tensor()
-    tokenized_abstracts = abstract_tokenizer(abstracts).convert_to_tensor()
+    tokenized_titles = title_tokenizer(titles).convert_to_tensors()
+    tokenized_abstracts = abstract_tokenizer(abstracts).convert_to_tensors()
 
     x = torch.stack((tokenized_titles, tokenized_abstracts), dim=1).contiguous()
 
