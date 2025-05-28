@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 import torch
 
@@ -68,3 +68,5 @@ if __name__ == "__main__":
         test_data,
         os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"),
     )
+
+    print("Data generation completed successfully.", file=sys.stderr)
