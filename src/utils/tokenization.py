@@ -17,8 +17,8 @@ def tokenize_data(data: Data, is_train: bool) -> Data:
     """
     tokenizer = TextTokenizer()
 
-    titles = data.x[:, 0]
-    abstracts = data.x[:, 1]
+    titles = list(data.x[:, 0])
+    abstracts = list(data.x[:, 1])
 
     tokenized_titles = tokenizer(titles)
     tokenized_abstracts = tokenizer(abstracts)
