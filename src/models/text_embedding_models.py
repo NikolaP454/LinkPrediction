@@ -40,8 +40,8 @@ class TextEmbedding(nn.Module):
         inputs = inputs.to(self.device)
 
         outputs = self.bert_model(
-            input_ids=inputs["input_ids"],
-            attention_mask=inputs["attention_mask"],
+            input_ids=inputs[:, 0]
+            attention_mask=inputs[:, 1]
         )
 
         embeddings = outputs.last_hidden_state[:, 0]
