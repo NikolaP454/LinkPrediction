@@ -68,7 +68,7 @@ class SageConvModel(nn.Module):
         embedded_titles, embedded_abstracts = None, None
 
         if self.use_titles:
-            embedded_titles = self.title_embedder(x_titles_inputs).to(self.device)
+            embedded_titles = self.title_embedder(x_titles_inputs, True).to(self.device)
 
         if self.use_abstracts:
             embedded_abstracts = self.abstract_embedder(x_abstracts_inputs).to(

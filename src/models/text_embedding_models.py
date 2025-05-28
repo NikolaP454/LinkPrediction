@@ -36,7 +36,10 @@ class TextEmbedding(nn.Module):
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def forward(self, inputs):
+    def forward(self, inputs, trim_title: bool = False):
+        if trim_title:
+            inputs = inputs[:, :, :64]
+
         inputs = inputs.to(self.device)
 
         outputs = self.bert_model(input_ids=inputs[:, 0], attention_mask=inputs[:, 1])
