@@ -39,7 +39,11 @@ class TextEmbedding(nn.Module):
     def forward(self, inputs):
         inputs = inputs.to(self.device)
 
-        outputs = self.bert_model(**inputs)
+        outputs = self.bert_model(
+            input_ids=inputs["input_ids"],
+            attention_mask=inputs["attention_mask"],
+        )
+
         embeddings = outputs.last_hidden_state[:, 0]
 
         if hasattr(self, "reducer"):

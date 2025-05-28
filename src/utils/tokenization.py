@@ -26,10 +26,32 @@ def tokenize_data(
     titles = list(data.x[:, 0])
     abstracts = list(data.x[:, 1])
 
-    tokenized_titles = title_tokenizer(titles).convert_to_tensors()
-    tokenized_abstracts = abstract_tokenizer(abstracts).convert_to_tensors()
+    tokenized_titles = title_tokenizer(titles)
+    tokenized_abstracts = abstract_tokenizer(abstracts)
 
-    x = torch.stack((tokenized_titles, tokenized_abstracts), dim=1).contiguous()
+    tokenized_titles_items = torch.stack(
+        [
+            tokenized_titles["input_ids"],
+            tokenized_titles["attention_mask"],
+        ],
+        dim=1,
+    )
+
+    tokenized_abstracts_items = torch.stack(
+        [
+            tokenized_abstracts["input_ids"],
+            tokenized_abstracts["attention_mask"],
+        ],
+        dim=1,
+    )
+
+    x = torch.stack(
+        [
+            tokenized_titles_items,
+            tokenized_abstracts_items,
+        ],
+        dim=1,
+    ).contiguous()
 
     if is_train:
         return Data(

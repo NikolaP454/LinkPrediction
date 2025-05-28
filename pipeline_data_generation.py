@@ -83,3 +83,4 @@ if __name__ == "__main__":
     )
 
     print("Data generation completed successfully.", file=sys.stderr)
+    print(f"Generated train data with shape: {train_data.x.shape}", file=sys.stderr)
