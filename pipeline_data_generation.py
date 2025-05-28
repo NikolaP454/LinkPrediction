@@ -55,8 +55,21 @@ if __name__ == "__main__":
     )
 
     # Tokenize the train and test data
-    train_data = utils.tokenization.tokenize_data(train_data, is_train=True)
-    test_data = utils.tokenization.tokenize_data(test_data, is_train=False)
+    title_tokenizer = utils.tokenization.TextTokenizer()
+    abstract_tokenizer = utils.tokenization.TextTokenizer()
+
+    train_data = utils.tokenization.tokenize_data(
+        train_data,
+        is_train=True,
+        title_tokenizer=title_tokenizer,
+        abstract_tokenizer=abstract_tokenizer,
+    )
+    test_data = utils.tokenization.tokenize_data(
+        test_data,
+        is_train=False,
+        title_tokenizer=title_tokenizer,
+        abstract_tokenizer=abstract_tokenizer,
+    )
 
     # Save the train and test data
     torch.save(
