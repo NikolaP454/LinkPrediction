@@ -70,11 +70,12 @@ if __name__ == "__main__":
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load the dataset
-    data = torch.load(os.path.join(EXPERIMENT_DATA_PATH, "train_data_tokenized.pt"))
-    train_dataset = datasets.ArxivDataset(data)
+    train_data = torch.load(
+        os.path.join(EXPERIMENT_DATA_PATH, "train_data_tokenized.pt")
+    )
 
     train_loader = LinkNeighborLoader(
-        train_dataset.get_data(),
+        train_data,
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
         neg_sampling_ratio=1,
         batch_size=LOADER_BATCH_SIZE,
@@ -97,7 +98,6 @@ if __name__ == "__main__":
     utils.training.train_model(
         model=model,
         optimizer=optimizer,
-        dataset=train_dataset,
         train_loader=train_loader,
         device=DEVICE,
         epochs=EPOCHS,
