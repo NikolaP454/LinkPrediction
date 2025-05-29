@@ -104,6 +104,8 @@ class SageConvModel(nn.Module):
 
         self.to(device)
 
+        print(f"Model loaded from {model_path} on device {device}")
+
     def save_pretrained(self, model_path):
         torch.save(self.state_dict(), model_path)
 
