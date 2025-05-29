@@ -81,17 +81,16 @@ if __name__ == "__main__":
         LOADER_BATCH_SIZE = train_configs["loader_batch_size"]
 
     # Load the dataset
-    data = torch.load(os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"))
-    test_dataset = datasets.ArxivDataset(data)
+    test_data = torch.load(os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"))
 
     test_loader = LinkNeighborLoader(
-        test_dataset.get_data(),
+        test_data,
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
         neg_sampling_ratio=0,
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,
-        edge_label_index=data.edge_index,
-        edge_label=data.edge_label,
+        edge_label_index=test_data.edge_index,
+        edge_label=test_data.edge_label,
     )
 
     # Load the model
@@ -111,7 +110,6 @@ if __name__ == "__main__":
     # Evaluate the model
     utils.evaluation.evaluate_model(
         model=model,
-        dataset=test_dataset,
         test_loader=test_loader,
         device=DEVICE,
         results_path=CURRENT_EVALUATION_RESULTS_PATH,

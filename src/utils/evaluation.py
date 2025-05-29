@@ -11,7 +11,6 @@ from .. import datasets
 
 def evaluate_model(
     model: nn.Module,
-    dataset: datasets.ArxivDataset,
     test_loader: LinkNeighborLoader,
     device: str = "cpu",
     results_path: str = None,
@@ -21,7 +20,6 @@ def evaluate_model(
 
     Args:
         model (nn.Module): The model to evaluate.
-        dataset (datasets.ArxivDataset): The dataset to evaluate on.
         test_loader (LinkNeighborLoader): The data loader for testing.
         device (str): The device to use for evaluation ('cpu' or 'cuda').
         results_path (str, optional): Path to save the evaluation results. Defaults to None.
@@ -40,8 +38,8 @@ def evaluate_model(
     all_labels = []
 
     for batch in tqdm(test_loader, desc="Evaluating"):
-        title_inputs = dataset.titles_inputs[batch["x"].tolist()]
-        abstract_inputs = dataset.abstracts_inputs[batch["x"].tolist()]
+        title_inputs = batch.x[:, 0].to(device)
+        abstract_inputs = batch.x[:, 1].to(device)
 
         edge_index = batch["edge_index"].to(device)
         edge_label_index = batch["edge_label_index"].to(device)
