@@ -87,7 +87,7 @@ if __name__ == "__main__":
     train_loader = LinkNeighborLoader(
         test_dataset.get_data(),
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
-        neg_sampling_ratio=1,
+        neg_sampling_ratio=0,
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,
     )
