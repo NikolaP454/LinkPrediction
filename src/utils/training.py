@@ -51,6 +51,8 @@ def train_model(
         range(continue_from_epoch, epochs) if continue_from_epoch > 0 else range(epochs)
     )
 
+    loss_f = nn.BCELoss()
+
     for epoch in RANGE:
         total_loss = 0.0
 
@@ -88,7 +90,7 @@ def train_model(
                 edge_label_index,
             ).squeeze()
 
-            loss = nn.BCEWithLogitsLoss()(pred_label, edge_label.float())
+            loss = loss_f(pred_label, edge_label.float())
             optimizer.zero_grad()
 
             loss.backward()
