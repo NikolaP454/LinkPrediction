@@ -90,6 +90,8 @@ if __name__ == "__main__":
         neg_sampling_ratio=0,
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,
+        edge_label_index=data.edge_index,
+        edge_label=data.edge_label,
     )
 
     # Load the model
