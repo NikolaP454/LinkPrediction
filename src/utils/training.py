@@ -60,8 +60,26 @@ def train_model(
             abstract_inputs = batch.x[:, 1].to(device)
 
             edge_index = batch["edge_index"].to(device)
-            edge_label_index = batch["edge_label_index"].to(device)
-            edge_label = batch["edge_label"].to(device)
+            # edge_label_index = batch["edge_label_index"].to(device)
+            # edge_label = batch["edge_label"].to(device)
+
+            src_index = batch["src_index"].to(device)
+            dst_index = batch["dst_index"].to(device)
+            dst_neg_index = batch["dst_neg_index"].to(device)
+
+            postive_edge_index = torch.stack([src_index, dst_index], dim=0)
+            negative_edge_index = torch.stack([src_index, dst_neg_index], dim=0)
+
+            edge_label_index = torch.cat(
+                [postive_edge_index, negative_edge_index], dim=1
+            )
+            edge_label = torch.cat(
+                [
+                    torch.ones(postive_edge_index.shape[1], device=device),
+                    torch.zeros(negative_edge_index.shape[1], device=device),
+                ],
+                dim=0,
+            )
 
             pred_label = model(
                 title_inputs,
