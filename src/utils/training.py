@@ -3,6 +3,7 @@ from tqdm import tqdm
 
 import torch
 import torch.nn as nn
+from torcheval.metrics import BinaryPrecision, BinaryRecall
 from torch_geometric.loader import LinkNeighborLoader
 
 from .. import datasets
@@ -51,6 +52,11 @@ def train_model(
     )
 
     for epoch in RANGE:
+        precision = BinaryPrecision().to(device)
+        recall = BinaryRecall().to(device)
+
+        all_predictions = []
+        all_labels = []
         total_loss = 0.0
 
         # Process each batch in the training loader
@@ -77,9 +83,24 @@ def train_model(
 
             total_loss += loss.item()
 
+            # Collect predictions and labels for logging
+            all_predictions.append(pred_label.detach().cpu())
+            all_labels.append(edge_label.detach().cpu())
+
         # Logging
+        all_predictions = torch.cat(all_predictions)
+        all_labels = torch.cat(all_labels)
+
+        precision.update(all_predictions, all_labels)
+        recall.update(all_predictions, all_labels)
+
+        precision_value = precision.compute().item()
+        recall_value = recall.compute().item()
+
         avg_loss = total_loss / len(train_loader)
-        print(f"Epoch {epoch}, Loss: {avg_loss:.4f}")
+        print(
+            f"Epoch {epoch}, Loss: {avg_loss:.4f}, Precision: {precision_value:.4f}, Recall: {recall_value:.4f}"
+        )
 
         if model_path:
             torch.save(
