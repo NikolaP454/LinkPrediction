@@ -80,12 +80,17 @@ if __name__ == "__main__":
     if LOADER_BATCH_SIZE == -1:
         LOADER_BATCH_SIZE = train_configs["loader_batch_size"]
 
+    if "loader_depth" in train_configs:
+        LOADER_DEPTH = train_configs["loader_depth"]
+    else:
+        LOADER_DEPTH = 2
+
     # Load the dataset
     test_data = torch.load(os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"))
 
     test_loader = LinkNeighborLoader(
         test_data,
-        num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
+        num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * LOADER_DEPTH,
         neg_sampling_ratio=0,
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,
