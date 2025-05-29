@@ -93,7 +93,7 @@ if __name__ == "__main__":
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * LOADER_DEPTH,
         neg_sampling_ratio=0,
         batch_size=LOADER_BATCH_SIZE,
-        shuffle=True,
+        shuffle=False,
         edge_label_index=test_data.edge_index,
         edge_label=test_data.edge_label,
     )
