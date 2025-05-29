@@ -64,7 +64,7 @@ def train_model(
             # edge_label = batch["edge_label"].to(device)
 
             src_index = batch["src_index"].to(device)
-            dst_index = batch["dst_index"].to(device)
+            dst_index = batch["dst_pos_index"].to(device)
             dst_neg_index = batch["dst_neg_index"].to(device)
 
             postive_edge_index = torch.stack([src_index, dst_index], dim=0)
