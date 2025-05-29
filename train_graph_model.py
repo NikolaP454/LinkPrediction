@@ -5,6 +5,7 @@ import torch
 from torch.optim import Adam
 from torch_geometric.data import Data
 from torch_geometric.loader import LinkNeighborLoader
+from torch_geometric.sampler import NegativeSampling
 
 from src import (
     datasets,
@@ -78,7 +79,7 @@ if __name__ == "__main__":
     train_loader = LinkNeighborLoader(
         train_data,
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * LOADER_DEPTH,
-        neg_sampling_ratio=1,
+        neg_sampling=NegativeSampling(mode="triplet", amount=1),
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,
     )
