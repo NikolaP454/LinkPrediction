@@ -67,7 +67,11 @@ def evaluate_model(
     precision_value = precision.compute().item()
     recall_value = recall.compute().item()
 
-    f1_score = 2 * (precision_value * recall_value) / (precision_value + recall_value)
+    f1_score = 0.0
+    if precision_value + recall_value > 0:
+        f1_score = (
+            2 * (precision_value * recall_value) / (precision_value + recall_value)
+        )
 
     # Output evaluation results
     print(
