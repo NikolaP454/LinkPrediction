@@ -3,6 +3,7 @@ import argparse
 from .script_args import (
     DataGenerationAC,
     TrainGraphModelAC,
+    EvaluateGraphModelAC,
 )
 
 
@@ -15,6 +16,7 @@ class ArgumentsFactory:
             {
                 "data_generation": DataGenerationAC,
                 "train_graph_model": TrainGraphModelAC,
+                "evaluate_graph_model": EvaluateGraphModelAC,
             }
         )
 
