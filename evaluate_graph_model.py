@@ -84,7 +84,7 @@ if __name__ == "__main__":
     data = torch.load(os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"))
     test_dataset = datasets.ArxivDataset(data)
 
-    train_loader = LinkNeighborLoader(
+    test_loader = LinkNeighborLoader(
         test_dataset.get_data(),
         num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
         neg_sampling_ratio=0,
@@ -106,4 +106,13 @@ if __name__ == "__main__":
 
     model.load_pretrained(
         os.path.join(MODEL_PATH, f"model_{MODEL_ITERATION}.pt"), device=DEVICE
+    )
+
+    # Evaluate the model
+    utils.evaluation.evaluate_model(
+        model=model,
+        dataset=test_dataset,
+        test_loader=test_loader,
+        device=DEVICE,
+        results_path=CURRENT_EVALUATION_RESULTS_PATH,
     )
