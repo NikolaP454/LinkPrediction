@@ -56,6 +56,7 @@ if __name__ == "__main__":
 
     LOADER_NEIGHBORHOOD_SIZE = ARGUMENTS.loader_neighborhood_size
     LOADER_BATCH_SIZE = ARGUMENTS.loader_batch_size
+    LOADER_DEPTH = ARGUMENTS.loader_depth
 
     # Save the run configurations
     with open(
@@ -76,7 +77,7 @@ if __name__ == "__main__":
 
     train_loader = LinkNeighborLoader(
         train_data,
-        num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * 2,
+        num_neighbors=[LOADER_NEIGHBORHOOD_SIZE] * LOADER_DEPTH,
         neg_sampling_ratio=1,
         batch_size=LOADER_BATCH_SIZE,
         shuffle=True,

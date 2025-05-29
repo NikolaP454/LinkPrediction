@@ -66,6 +66,13 @@ class TrainGraphModelAC(BaseArgumentCreator):
         )
 
         parser.add_argument(
+            "--loader_depth",
+            type=int,
+            default=2,
+            help="Depth of the neighborhood for the data loader",
+        )
+
+        parser.add_argument(
             "--epochs",
             type=int,
             default=1,
