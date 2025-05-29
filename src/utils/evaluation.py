@@ -30,6 +30,7 @@ def evaluate_model(
     # Setup
     model.eval()
     model.to(device)
+    print(f"Evaluating model on device: {model.device}")
 
     precision = BinaryPrecision().to(device)
     recall = BinaryRecall().to(device)
