@@ -48,6 +48,7 @@ class SageConvModel(nn.Module):
         self.conv2 = SAGEConv(hidden_channels, out_channels)
 
         self.classifier = nn.Linear(out_channels * 2, 1)
+        self.sigmoid = nn.Sigmoid()
 
     def __joint_embeddings(self, embedded_titles, embedded_abstracts):
         if self.use_titles and self.use_abstracts:
@@ -96,7 +97,7 @@ class SageConvModel(nn.Module):
 
         total_x = torch.cat([u_embeddings, v_embeddings], dim=1)
 
-        return self.classifier(total_x)
+        return self.sigmoid(self.classifier(total_x))
 
     def load_pretrained(self, model_path, device="cpu"):
         state_dict = torch.load(model_path, map_location=torch.device(device))
