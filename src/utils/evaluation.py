@@ -38,8 +38,8 @@ def evaluate_model(
     all_labels = []
 
     for batch in tqdm(test_loader, desc="Evaluating"):
-        title_inputs = batch.x[:, 0].to(device)
-        abstract_inputs = batch.x[:, 1].to(device)
+        title_inputs = batch.x[:, 0]
+        abstract_inputs = batch.x[:, 1]
 
         edge_index = batch["edge_index"].to(device)
         edge_label_index = batch["edge_label_index"].to(device)
