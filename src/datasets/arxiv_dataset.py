@@ -38,3 +38,27 @@ class ArxivDataset:
 
     def get_abstract(self, idx):
         return self.abstracts[idx]
+
+    def get_cites(self, idx, ignore: int = -1):
+        cites_node_ids = self.data.edge_index[1][
+            self.data.edge_index[0] == idx
+        ].tolist()
+
+        if ignore != -1:
+            cites_node_ids = [c for c in cites_node_ids if c != ignore]
+
+        return [self.titles[cite] for cite in cites_node_ids if cite < len(self.titles)]
+
+    def get_is_cited_by(self, idx, ignore: int = -1):
+        is_cited_by_node_ids = self.data.edge_index[0][
+            self.data.edge_index[1] == idx
+        ].tolist()
+
+        if ignore != -1:
+            is_cited_by_node_ids = [c for c in is_cited_by_node_ids if c != ignore]
+
+        return [
+            self.titles[cited_by]
+            for cited_by in is_cited_by_node_ids
+            if cited_by < len(self.titles)
+        ]
