@@ -17,6 +17,8 @@ class PromptLinkPredictionModel(nn.Module):
             model_name, num_labels=1
         )
 
+        self.output = nn.Sigmoid()
+
         # Other initializations
         self.max_length = max_length
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -27,12 +29,13 @@ class PromptLinkPredictionModel(nn.Module):
         inputs = self.tokenizer(texts).to(self.device)
         outputs = self.model(**inputs)
 
-        return outputs.logits
+        return self.output(outputs.logits)
 
     def to(self, device):
         super(PromptLinkPredictionModel, self).to(device)
 
         self.device = device
         self.model.to(device)
+        self.output.to(device)
 
         return self
