@@ -197,14 +197,14 @@ def train_prompt_model(
 
                 if add_relations:
                     source_cites = dataset.get_cites(source_id, ignore=destination_id)
-                    source_is_cited_by = dataset.get_cites(
+                    source_is_cited_by = dataset.get_is_cited_by(
                         source_id, ignore=destination_id
                     )
 
                     destination_cites = dataset.get_cites(
                         destination_id, ignore=source_id
                     )
-                    destination_is_cited_by = dataset.get_cites(
+                    destination_is_cited_by = dataset.get_is_cited_by(
                         destination_id, ignore=source_id
                     )
 
