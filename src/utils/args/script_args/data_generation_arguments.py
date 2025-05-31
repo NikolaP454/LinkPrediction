@@ -36,4 +36,11 @@ class DataGenerationAC(BaseArgumentCreator):
             help="Number of negative edges to generate per node",
         )
 
+        parser.add_argument(
+            "--disable_tokenization",
+            action="store_true",
+            default=False,
+            help="Disable tokenization of text data",
+        )
+
         return parser

@@ -55,31 +55,40 @@ if __name__ == "__main__":
     )
 
     # Tokenize the train and test data
-    title_tokenizer = utils.tokenization.TextTokenizer()
-    abstract_tokenizer = utils.tokenization.TextTokenizer()
+    SHOULD_TOKENIZE = not ARGUMENTS.disable_tokenization
 
-    train_data = utils.tokenization.tokenize_data(
-        train_data,
-        is_train=True,
-        title_tokenizer=title_tokenizer,
-        abstract_tokenizer=abstract_tokenizer,
-    )
-    test_data = utils.tokenization.tokenize_data(
-        test_data,
-        is_train=False,
-        title_tokenizer=title_tokenizer,
-        abstract_tokenizer=abstract_tokenizer,
-    )
+    if SHOULD_TOKENIZE:
+        title_tokenizer = utils.tokenization.TextTokenizer()
+        abstract_tokenizer = utils.tokenization.TextTokenizer()
+
+        train_data = utils.tokenization.tokenize_data(
+            train_data,
+            is_train=True,
+            title_tokenizer=title_tokenizer,
+            abstract_tokenizer=abstract_tokenizer,
+        )
+        test_data = utils.tokenization.tokenize_data(
+            test_data,
+            is_train=False,
+            title_tokenizer=title_tokenizer,
+            abstract_tokenizer=abstract_tokenizer,
+        )
 
     # Save the train and test data
     torch.save(
         train_data,
-        os.path.join(EXPERIMENT_DATA_PATH, "train_data_tokenized.pt"),
+        os.path.join(
+            EXPERIMENT_DATA_PATH,
+            f"train_data{'_tokenized' if SHOULD_TOKENIZE else ''}.pt",
+        ),
     )
 
     torch.save(
         test_data,
-        os.path.join(EXPERIMENT_DATA_PATH, "test_data_tokenized.pt"),
+        os.path.join(
+            EXPERIMENT_DATA_PATH,
+            f"test_data{'_tokenized' if SHOULD_TOKENIZE else ''}.pt",
+        ),
     )
 
     print("Data generation completed successfully.", file=sys.stderr)
