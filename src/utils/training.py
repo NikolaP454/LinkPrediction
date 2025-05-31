@@ -164,8 +164,8 @@ def train_prompt_model(
         # Process each batch in the training loader
         for batch in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{epochs}"):
             # Extracting titles and abstracts from the dataset
-            titles = [dataset.get_title(i) for i in batch["x"].tolist()]
-            abstracts = [dataset.get_abstract(i) for i in batch["x"].tolist()]
+            titles = [dataset.get_title(int(i)) for i in batch["x"].tolist()]
+            abstracts = [dataset.get_abstract(int(i)) for i in batch["x"].tolist()]
 
             # Extracting node IDs and indices
             src_index = batch["src_index"].to(device)
@@ -182,6 +182,7 @@ def train_prompt_model(
             for source_id, src, destination_id, dst in zip(
                 source_ids, src_index, destination_ids, dst_index
             ):
+                source_id, destination_id = int(source_id), int(destination_id)
 
                 source_title, _ = titles[src], abstracts[src]
                 destination_title, _ = titles[dst], abstracts[dst]
