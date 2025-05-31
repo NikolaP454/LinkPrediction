@@ -169,6 +169,8 @@ def train_prompt_model(
 
             # Extracting node IDs and indices
             src_index = batch["src_index"].to(device)
+            src_index = torch.cat([src_index, src_index], dim=0)
+
             dst_pos_index = batch["dst_pos_index"].to(device)
             dst_neg_index = batch["dst_neg_index"].to(device)
             dst_index = torch.cat([dst_pos_index, dst_neg_index], dim=0)

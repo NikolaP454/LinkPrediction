@@ -24,7 +24,7 @@ class PromptLinkPredictionModel(nn.Module):
         self.to(self.device)
 
     def forward(self, texts):
-        inputs = self.tokenizer(texts)
+        inputs = self.tokenizer(texts).to(self.device)
         outputs = self.model(**inputs)
 
         return outputs.logits
