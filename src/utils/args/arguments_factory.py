@@ -5,6 +5,7 @@ from .script_args import (
     TrainGraphModelAC,
     TrainPromptModelAC,
     EvaluateGraphModelAC,
+    EvaluatePromptModelAC,
 )
 
 
@@ -19,6 +20,7 @@ class ArgumentsFactory:
                 "train_graph_model": TrainGraphModelAC,
                 "train_prompt_model": TrainPromptModelAC,
                 "evaluate_graph_model": EvaluateGraphModelAC,
+                "evaluate_prompt_model": EvaluatePromptModelAC,
             }
         )
 
