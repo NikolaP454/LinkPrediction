@@ -7,7 +7,7 @@ class TrainPromptModelAC(BaseArgumentCreator):
 
     @staticmethod
     def create_parser() -> argparse.ArgumentParser:
-        parser = argparse.ArgumentParser(description="Train Graph Model Arguments")
+        parser = argparse.ArgumentParser(description="Train Prompt Model Arguments")
 
         parser.add_argument(
             "--experiment_path",
