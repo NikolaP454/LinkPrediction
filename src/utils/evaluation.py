@@ -183,8 +183,8 @@ def evaluate_prompt_model(
         for i in range(edge_label_index.size(1)):
             src, dst = int(edge_label_index[0, i]), int(edge_label_index[1, i])
 
-            source_id = global_n_ids[src]
-            destination_id = global_n_ids[dst]
+            source_id = int(global_n_ids[src])
+            destination_id = int(global_n_ids[dst])
 
             source_title = test_dataset.get_title(source_id)
             destination_title = test_dataset.get_title(destination_id)
