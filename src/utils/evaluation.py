@@ -181,7 +181,7 @@ def evaluate_prompt_model(
         prompts = []
 
         for i in range(edge_label_index.size(1)):
-            src, dst = edge_label_index[0, i], edge_label_index[1, i]
+            src, dst = int(edge_label_index[0, i]), int(edge_label_index[1, i])
 
             source_id = global_n_ids[src]
             destination_id = global_n_ids[dst]
