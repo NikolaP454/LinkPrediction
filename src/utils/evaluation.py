@@ -7,7 +7,7 @@ from torcheval.metrics import BinaryPrecision, BinaryRecall, BinaryAUPRC
 from torch_geometric.loader import LinkNeighborLoader
 
 from .. import datasets
-import prompting
+from . import prompting
 
 
 def get_metrics(
