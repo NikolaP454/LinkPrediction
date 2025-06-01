@@ -31,6 +31,14 @@ class PromptLinkPredictionModel(nn.Module):
 
         return self.output(outputs.logits)
 
+    def load_pretrained(self, model_path, device="cpu"):
+        state_dict = torch.load(model_path, map_location=torch.device(device))
+        self.load_state_dict(state_dict)
+
+        self.to(device)
+
+        print(f"Model loaded from {model_path} on device {device}")
+
     def to(self, device):
         super(PromptLinkPredictionModel, self).to(device)
 
